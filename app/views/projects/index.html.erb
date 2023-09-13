@@ -1,14 +1,14 @@
-<p style="color: green"><%= notice %></p>
+<div>
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h1>Projects</h1>
+    <%= link_to "New project", new_project_path,
+                               class: "btn btn-secondary",
+                               data: { turbo_frame: dom_id(Project.new) } %>
+  </div>
 
-<h1>Projects</h1>
+  <%= turbo_frame_tag Project.new %>
 
-<div id="projects">
-  <% @projects.each do |project| %>
-    <%= render project %>
-    <p>
-      <%= link_to "Show this project", project %>
-    </p>
-  <% end %>
+  <div id="projects">
+    <%= render @projects %>
+  </div>
 </div>
-
-<%= link_to "New project", new_project_path %>
