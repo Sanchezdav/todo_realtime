@@ -1,10 +1,37 @@
-<p style="color: green"><%= notice %></p>
-
-<%= render @project %>
-
 <div>
-  <%= link_to "Edit this project", edit_project_path(@project) %> |
-  <%= link_to "Back to projects", projects_path %>
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <%= turbo_frame_tag :project_name do %>
+      <%= link_to edit_project_path(@project) do %>
+        <h1><%= @project.name %></h1>
+      <% end %>
+    <% end %>
+    <%= link_to "New task", new_project_task_path(@project), class: "btn btn-secondary" %>
+  </div>
+  <ul class="list-group">
+    <li class="list-group-item">
+      <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+      First checkbox
+    </li>
+    <li class="list-group-item">
+      <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+      Second checkbox
+    </li>
+    <li class="list-group-item">
+      <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+      Third checkbox
+    </li>
+    <li class="list-group-item">
+      <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+      Fourth checkbox
+    </li>
+    <li class="list-group-item">
+      <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+      Fifth checkbox
+    </li>
+  </ul>
+  <div class="d-flex align-items-center justify-content-between mt-5">
+    <%= link_to "Back to projects", projects_path %>
 
-  <%= button_to "Destroy this project", @project, method: :delete %>
+    <%= button_to "Destroy this project", @project, method: :delete, class: "btn btn-danger" %>
+  </div>
 </div>
