@@ -12,6 +12,7 @@ class TasksController < ApplicationController
 
   # GET /tasks/new
   def new
+    @project = Project.find(params[:project_id])
     @task = Task.new
   end
 
@@ -21,15 +22,24 @@ class TasksController < ApplicationController
 
   # POST /tasks or /tasks.json
   def create
-    @task = Task.new(task_params)
+    @project = Project.find(params[:project_id])
+    @task = @project.tasks.new(task_params)
 
     respond_to do |format|
       if @task.save
         format.html { redirect_to task_url(@task), notice: "Task was successfully created." }
         format.json { render :show, status: :created, location: @task }
+        format.turbo_stream
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @task.errors, status: :unprocessable_entity }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(
+            "new_task_form",
+            partial: "tasks/form",
+            locals: { task: @task }
+          )
+        end
       end
     end
   end
@@ -54,6 +64,9 @@ class TasksController < ApplicationController
     respond_to do |format|
       format.html { redirect_to tasks_url, notice: "Task was successfully destroyed." }
       format.json { head :no_content }
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.remove(@task)
+      end
     end
   end
 
@@ -65,6 +78,6 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.require(:task).permit(:description, :completed, :completed_at, :project_id)
+      params.require(:task).permit(:description)
     end
 end

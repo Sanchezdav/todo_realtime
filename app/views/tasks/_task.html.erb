@@ -1,22 +1,13 @@
-<div id="<%= dom_id task %>">
-  <p>
-    <strong>Description:</strong>
-    <%= task.description %>
-  </p>
-
-  <p>
-    <strong>Completed:</strong>
-    <%= task.completed %>
-  </p>
-
-  <p>
-    <strong>Completed at:</strong>
-    <%= task.completed_at %>
-  </p>
-
-  <p>
-    <strong>Project:</strong>
-    <%= task.project_id %>
-  </p>
-
-</div>
+<%= turbo_frame_tag task do %>
+  <li class="list-group-item">
+    <div class="d-flex alig-items-center justify-content-between">
+      <div>
+        <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+        <%= task.description %>
+      </div>
+      <div>
+        <%= button_to "Destroy", project_task_path(project, task), method: :delete, class: "btn btn-danger btn-sm" %>
+      </div>
+    </div>
+  </li>
+<% end %>

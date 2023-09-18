@@ -1,0 +1,4 @@
+<%= turbo_stream.append "project-#{@project.id}-tasks" do %>
+  <%= render partial: 'tasks/task', locals: { project: @project, task: @task } %>
+<% end %>
+<%= turbo_stream.update "new_task_form", "" %>
