@@ -1,9 +1,20 @@
 <%= turbo_frame_tag task do %>
   <li class="list-group-item">
     <div class="d-flex alig-items-center justify-content-between">
-      <div>
-        <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-        <%= task.description %>
+      <div class="d-flex">
+        <%= form_with(model: [project, task], html: { 'data-controller': 'tasks', 'data-target': 'tasks.form' }) do |form| %>
+          <%= form.check_box :completed,
+                            data: {
+                              id: task.id,
+                              project_id: project.id,
+                              action: "change->tasks#submitForm",
+                              target: "tasks.checkbox"
+                            },
+                            class: "form-check-input" %>
+        <% end %>
+        <p class="m-0 ms-2 <%= task.completed ? "text-decoration-line-through" : "" %>">
+          <%= task.description %>
+        </p>
       </div>
       <div>
         <%= button_to "Destroy", project_task_path(project, task), method: :delete, class: "btn btn-danger btn-sm" %>
