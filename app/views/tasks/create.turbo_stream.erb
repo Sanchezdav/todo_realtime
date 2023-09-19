@@ -2,3 +2,6 @@
   <%= render partial: 'tasks/task', locals: { project: @project, task: @task } %>
 <% end %>
 <%= turbo_stream.update "new_task_form", "" %>
+<%= turbo_stream.replace "project-#{@project.id}-counts" do %>
+  <%= render "projects/project_counts", project: @project %>
+<% end %>

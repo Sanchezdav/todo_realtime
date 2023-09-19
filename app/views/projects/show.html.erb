@@ -10,6 +10,8 @@
                             data: { turbo_frame: "new_task_form" } %>
   </div>
 
+  <%= render "projects/project_counts", project: @project %>
+
   <%= turbo_frame_tag "new_task_form" %>
 
   <% if @project.tasks.any? %>

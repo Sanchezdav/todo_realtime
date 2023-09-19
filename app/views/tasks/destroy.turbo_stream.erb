@@ -1,6 +1,4 @@
-<%= turbo_stream.replace @task do %>
-  <%= render partial: 'tasks/task', locals: { project: @task.project, task: @task } %>
-<% end %>
+<%= turbo_stream.remove(@task) %>
 <%= turbo_stream.replace "project-#{@task.project.id}-counts" do %>
   <%= render "projects/project_counts", project: @task.project %>
 <% end %>
