@@ -18,13 +18,18 @@ export default class extends ApplicationController {
 
   static targets = ["form", "checkbox"]
 
+  connect () {
+    super.connect()
+    // add your code here, if applicable
+  }
+
   submitForm(event) {
     this.formTarget.requestSubmit()
   }
 
-  connect () {
-    super.connect()
-    // add your code here, if applicable
+  beforeCreate(element) {
+    console.log("beforeCreate", element)
+    element.innerText = 'Creating...'
   }
 
   /* Reflex specific lifecycle methods.

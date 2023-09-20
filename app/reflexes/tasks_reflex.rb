@@ -1,6 +1,23 @@
 # frozen_string_literal: true
 
 class TasksReflex < ApplicationReflex
+  def create
+    @project = Project.find(params[:id])
+    @task = @project.tasks.new(task_params)
+    if @task.save
+      cable_ready.remove(selector: '#new_task_form').broadcast
+    else
+      html = render(partial: 'tasks/form', locals: { project: @project, task: @task })
+      morph "#new_task_form", html
+    end
+  end
+
+  private
+
+  def task_params
+    params.require(:task).permit(:description)
+  end
+
   # Add Reflex methods in this file.
   #
   # All Reflex instances include CableReady::Broadcaster and expose the following properties:

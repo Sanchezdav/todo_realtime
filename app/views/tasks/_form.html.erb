@@ -1,4 +1,6 @@
-<%= form_with(model: [@project, task]) do |form| %>
+<%= form_with(model: [project, task],
+              html: { data: { controller: 'tasks' }},
+              local: false) do |form| %>
   <% if task.errors.any? %>
     <div class="alert alert-danger">
       <ul class="m-0">
@@ -14,7 +16,7 @@
   </div>
 
   <div class="d-flex align-items-center justify-content-between mb-3">
-    <%= form.submit class: "btn btn-success" %>
-    <%= link_to "Cancel", project_path(@project) %>
+    <%= form.submit "Create", id: "submit-tasks", class: "btn btn-success", data: { reflex: 'click->Tasks#create' } %>
+    <%= link_to "Cancel", project_path(project) %>
   </div>
 <% end %>

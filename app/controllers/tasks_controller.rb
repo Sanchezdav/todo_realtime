@@ -29,17 +29,9 @@ class TasksController < ApplicationController
       if @task.save
         format.html { redirect_to task_url(@task), notice: "Task was successfully created." }
         format.json { render :show, status: :created, location: @task }
-        format.turbo_stream
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @task.errors, status: :unprocessable_entity }
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.replace(
-            "new_task_form",
-            partial: "tasks/form",
-            locals: { task: @task, project: @project }
-          )
-        end
       end
     end
   end
