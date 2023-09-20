@@ -1,17 +1,11 @@
 <%= turbo_frame_tag task do %>
   <li class="list-group-item">
     <div class="d-flex alig-items-center justify-content-between">
-      <div class="d-flex">
-        <%= form_with(model: [project, task], html: { 'data-controller': 'tasks', 'data-target': 'tasks.form' }) do |form| %>
-          <%= form.check_box :completed,
-                            data: {
-                              id: task.id,
-                              project_id: project.id,
-                              action: "change->tasks#submitForm",
-                              target: "tasks.checkbox"
-                            },
-                            class: "form-check-input" %>
-        <% end %>
+      <div class="d-flex align-items-center">
+        <%= check_box_tag "task-#{task.id}-checkbox",
+                          task.completed,
+                          task.completed,
+                          { data: { reflex: 'change->Tasks#toggle', task_id: task.id }, class: "form-check-input" } %>
         <p class="m-0 ms-2 <%= task.completed ? "text-decoration-line-through" : "" %>">
           <%= task.description %>
         </p>

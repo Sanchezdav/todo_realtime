@@ -12,6 +12,12 @@ class TasksReflex < ApplicationReflex
     end
   end
 
+  def toggle
+    @project = Project.find(params[:id])
+    @task = @project.tasks.find(element.dataset.task_id)
+    @task.update(completed: element.checked)
+  end
+
   private
 
   def task_params
